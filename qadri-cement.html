@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cement Industry — Qadri Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ── TOKENS ── */
+:root {
+  --orange:   #E05206; /* RAL 2004 Pure Orange */
+  --black:    #111111;
+  --basalt:   #596163; /* RAL 7012 Basalt Grey */
+  --white:    #ffffff;
+  --off:      #f5f5f3;
+  --border:   #e2e2de;
+  --font:     'Archivo', sans-serif;
+  --ease:     cubic-bezier(.4,0,.2,1);
+}
+
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--basalt);background:var(--white);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:0 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.nav-logo{
+  font-size:18px;font-weight:600;color:var(--black);
+  letter-spacing:-.02em;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo span{color:var(--orange)}
+.nav-links{display:flex;gap:32px;font-size:13px;font-weight:500;color:var(--basalt)}
+.nav-links a:hover{color:var(--black)}
+.nav-links a.active{color:var(--orange)}
+
+/* ── HERO ── */
+.hero{
+  background:var(--black);
+  color:var(--white);
+  padding:96px 48px 80px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:center;
+  min-height:480px;
+}
+.hero-tag{
+  display:inline-block;
+  font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--orange);
+  border:1px solid var(--orange);
+  padding:4px 10px;border-radius:2px;
+  margin-bottom:24px;
+}
+.hero h1{
+  font-size:clamp(36px,4vw,56px);
+  font-weight:300;
+  color:var(--white);
+  line-height:1.1;
+  letter-spacing:-.02em;
+  margin-bottom:20px;
+}
+.hero h1 strong{font-weight:600}
+.hero-sub{
+  font-size:16px;line-height:1.7;
+  color:rgba(255,255,255,.6);
+  max-width:480px;
+}
+.hero-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:2px;
+}
+.stat{
+  background:rgba(255,255,255,.05);
+  padding:28px 24px;
+}
+.stat-n{
+  font-size:42px;font-weight:600;
+  color:var(--white);line-height:1;
+  margin-bottom:6px;
+}
+.stat-n span{color:var(--orange)}
+.stat-label{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.04em}
+
+/* ── SECTION SHELL ── */
+.section{padding:80px 48px}
+.section.alt{background:var(--off)}
+.section-head{margin-bottom:48px}
+.section-head h2{
+  font-size:clamp(24px,3vw,36px);
+  font-weight:600;color:var(--black);
+  letter-spacing:-.02em;line-height:1.15;
+  margin-bottom:12px;
+}
+.section-head p{font-size:15px;line-height:1.7;max-width:560px}
+
+/* ── PROCESS STRIP ── */
+.process-strip{
+  display:flex;gap:0;
+  border:1px solid var(--border);
+  overflow:hidden;border-radius:4px;
+  margin-bottom:64px;
+}
+.ps-step{
+  flex:1;padding:20px 16px;
+  border-right:1px solid var(--border);
+  cursor:pointer;transition:background .2s var(--ease);
+  text-align:center;
+}
+.ps-step:last-child{border-right:none}
+.ps-step:hover,.ps-step.active{background:var(--orange);color:var(--white)}
+.ps-step:hover .ps-label,.ps-step.active .ps-label{color:var(--white)}
+.ps-num{font-size:11px;color:rgba(0,0,0,.3);margin-bottom:4px;font-weight:600}
+.ps-step.active .ps-num,.ps-step:hover .ps-num{color:rgba(255,255,255,.6)}
+.ps-label{font-size:13px;font-weight:500;color:var(--black);line-height:1.3}
+
+/* ── PRODUCT STAGE ── */
+.stage{margin-bottom:72px}
+.stage-header{
+  display:flex;align-items:baseline;gap:16px;
+  margin-bottom:32px;padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.stage-header h3{
+  font-size:22px;font-weight:600;color:var(--black);
+}
+.stage-count{font-size:13px;color:var(--basalt)}
+
+/* ── PRODUCT GRID ── */
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:2px;
+}
+
+/* ── PRODUCT CARD ── */
+.p-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:border-color .2s var(--ease), transform .2s var(--ease);
+  display:flex;flex-direction:column;
+}
+.p-card:hover{border-color:var(--orange);transform:translateY(-2px);z-index:2}
+.p-card:hover .card-arrow{opacity:1;transform:translate(0,0)}
+.p-card:hover .card-img-wrap::after{opacity:1}
+
+.card-img-wrap{
+  width:100%;aspect-ratio:4/3;
+  background:var(--off);
+  position:relative;overflow:hidden;
+}
+.card-img-wrap::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(224,82,6,.08),rgba(224,82,6,.02));
+  opacity:0;transition:opacity .2s var(--ease);
+}
+.card-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .4s var(--ease);
+}
+.p-card:hover .card-img-wrap img{transform:scale(1.04)}
+
+/* placeholder when no real image */
+.img-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:8px;color:var(--border);
+}
+.img-placeholder svg{width:40px;height:40px;opacity:.4}
+.img-placeholder span{font-size:11px;color:var(--basalt);opacity:.5}
+
+.card-body{padding:20px 20px 16px;flex:1;display:flex;flex-direction:column}
+.card-body h4{
+  font-size:15px;font-weight:600;
+  color:var(--black);line-height:1.3;
+  margin-bottom:8px;
+}
+.card-body p{
+  font-size:13px;line-height:1.6;
+  color:var(--basalt);flex:1;
+}
+.card-footer{
+  padding:12px 20px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.card-mat{
+  font-size:11px;font-weight:600;
+  letter-spacing:.06em;
+  color:var(--basalt);text-transform:uppercase;
+}
+.card-arrow{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--orange);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:translate(4px,4px);
+  transition:opacity .2s var(--ease),transform .2s var(--ease);
+  flex-shrink:0;
+}
+.card-arrow svg{width:12px;height:12px;stroke:var(--white);fill:none}
+
+/* ── CLINKER COOLER (featured) ── */
+.clinker-feature{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:1fr 1fr;
+  border:2px solid var(--orange);
+  background:var(--white);
+  position:relative;overflow:hidden;
+}
+.clinker-feature::before{
+  content:'KEY PRODUCT';
+  position:absolute;top:16px;right:16px;
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  color:var(--orange);
+  border:1px solid var(--orange);
+  padding:3px 8px;border-radius:2px;
+}
+.clinker-img{
+  background:var(--off);
+  aspect-ratio:unset;min-height:260px;
+}
+.clinker-content{padding:36px 32px;display:flex;flex-direction:column;justify-content:center}
+.clinker-content h4{
+  font-size:22px;font-weight:600;color:var(--black);
+  letter-spacing:-.01em;margin-bottom:12px;
+}
+.clinker-content p{font-size:14px;line-height:1.7;margin-bottom:20px}
+.clinker-specs{display:flex;gap:24px;flex-wrap:wrap}
+.c-spec{display:flex;flex-direction:column;gap:2px}
+.c-spec-val{font-size:18px;font-weight:600;color:var(--orange)}
+.c-spec-key{font-size:11px;color:var(--basalt);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── CAPABILITIES BAR ── */
+.cap-bar{
+  background:var(--black);color:var(--white);
+  padding:60px 48px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  margin:0;
+}
+.cap{
+  padding:32px 28px;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.cap:last-child{border-right:none}
+.cap-n{
+  font-size:36px;font-weight:600;color:var(--orange);
+  line-height:1;margin-bottom:6px;
+}
+.cap-label{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;
+}
+.footer-logo{font-size:16px;font-weight:600;color:var(--black)}
+.footer-logo span{color:var(--orange)}
+footer p{color:var(--basalt)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 24px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:60px 24px}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .section{padding:56px 24px}
+  .cap-bar{grid-template-columns:1fr 1fr;padding:40px 24px}
+  .clinker-feature{grid-template-columns:1fr}
+  .clinker-img{min-height:200px}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:32px 24px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Qadri<span>Group</span></div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#" class="active">Cement</a>
+    <a href="#">Sugar</a>
+    <a href="#">Mining</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-tag">Industry Focus</div>
+    <h1>Cement<br><strong>Industry</strong><br>Solutions</h1>
+    <p class="hero-sub">Four generations of precision casting and machining — supplying wear-critical components to cement plants across Asia, the Middle East, Africa and Europe.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-n">125<span>+</span></div>
+      <div class="stat-label">Years of engineering</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">34<span>+</span></div>
+      <div class="stat-label">Cement product lines</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">40<span>+</span></div>
+      <div class="stat-label">Countries supplied</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">6<span>+</span></div>
+      <div class="stat-label">OEM approvals</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section">
+  <div class="section-head">
+    <h2>Products by Process Stage</h2>
+    <p>Engineered components for every critical point in the cement production line — from raw material handling through to finish milling.</p>
+  </div>
+
+  <!-- Process strip -->
+  <div class="process-strip">
+    <div class="ps-step active"><div class="ps-num">01</div><div class="ps-label">Crushing &amp; Raw Milling</div></div>
+    <div class="ps-step"><div class="ps-num">02</div><div class="ps-label">Pyroprocessing</div></div>
+    <div class="ps-step"><div class="ps-num">03</div><div class="ps-label">Clinker Cooling</div></div>
+    <div class="ps-step"><div class="ps-num">04</div><div class="ps-label">Finish Milling</div></div>
+    <div class="ps-step"><div class="ps-num">05</div><div class="ps-label">Packing &amp; Dispatch</div></div>
+  </div>
+
+  <!-- STAGE 1 -->
+  <div class="stage" id="stage1">
+    <div class="stage-header">
+      <h3>Crushing &amp; Raw Milling</h3>
+      <span class="stage-count">8 products</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+            <span>Photo</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h4>Crusher Hammers</h4>
+          <p>High-chrome and bimetallic insert hammers for limestone and clinker crushing. Designed for maximum impact resistance.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Hi-Chrome · Bimetallic</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Blow Bars</h4>
+          <p>Impact crusher blow bars in martensitic, high-chrome and ceramic insert grades for extended service life.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Martensitic · Hi-Chrome</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>VRM Grinding Rollers</h4>
+          <p>Vertical roller mill grinding elements — tyres and rollers — in high-chrome iron for raw meal, coal and cement grinding.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Hi-Chrome Iron</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Mill Liners</h4>
+          <p>Ball mill shell and end liners — lifter bars and wave liners in chrome-moly steel and high-chrome iron alloys.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Chrome-Moly Steel</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="stage" id="stage2">
+    <div class="stage-header">
+      <h3>Pyroprocessing</h3>
+      <span class="stage-count">6 products</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Kiln Tyres</h4>
+          <p>Rotary kiln riding rings in cast carbon and alloy steel — precision machined to OEM tolerances for Loesche, KHD and FLSmidth kilns.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Alloy Steel</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Support Rollers</h4>
+          <p>Kiln trunnion rollers and thrust rollers. Machined from cast steel, balanced to minimise vibration and extend bearing life.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Cast Steel</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Girth Gears</h4>
+          <p>Large-diameter open gearing for rotary kilns and ball mills. Cast in manganese or alloy steel with hobbed tooth profiles.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Mn Steel · Alloy Steel</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Dip Tubes</h4>
+          <p>FLS MAT 5860 grade dip tubes for cyclone preheater systems. FLSmidth-qualified supplier with full traceability documentation.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">FLS MAT 5860</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STAGE 3 — Clinker Cooler featured -->
+  <div class="stage" id="stage3">
+    <div class="stage-header">
+      <h3>Clinker Cooling</h3>
+      <span class="stage-count">4 products</span>
+    </div>
+    <div class="product-grid">
+
+      <!-- Featured Clinker Cooler card -->
+      <div class="p-card clinker-feature">
+        <div class="card-img-wrap clinker-img">
+          <div class="img-placeholder" style="height:100%">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:56px;height:56px"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+            <span>Product Photo</span>
+          </div>
+        </div>
+        <div class="clinker-content">
+          <h4>Clinker Cooler Grate Plates</h4>
+          <p>High-heat-resistant grate plates for IKN, Claudius Peters and FLSmidth coolers. Cast in heat-resistant alloy steel with optimised airflow geometry for maximum cooling efficiency.</p>
+          <div class="clinker-specs">
+            <div class="c-spec"><span class="c-spec-val">1150°C</span><span class="c-spec-key">Max service temp.</span></div>
+            <div class="c-spec"><span class="c-spec-val">OEM</span><span class="c-spec-key">Drawing matched</span></div>
+            <div class="c-spec"><span class="c-spec-val">IKN · CP · FLS</span><span class="c-spec-key">Compatible brands</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Dam Rings</h4>
+          <p>Clinker cooler dam rings and retaining rings cast in heat-resistant alloy steel to OEM and proprietary profiles.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Heat-Resistant Steel</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Crushing Rings</h4>
+          <p>Satellite and roll crusher rings for clinker size reduction — cast and finish-machined for a precise fit.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Alloy Steel</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STAGE 4 -->
+  <div class="stage" id="stage4">
+    <div class="stage-header">
+      <h3>Finish Milling</h3>
+      <span class="stage-count">5 products</span>
+    </div>
+    <div class="product-grid">
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Diaphragm Grate Plates</h4>
+          <p>Ball mill intermediate and outlet diaphragm grate plates and liners. Available in standard and custom grades including CRO 8015 and FLS MAT 3422.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">CRO 8015 · MAT 3422</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Diaphragm Liners</h4>
+          <p>Wear-resistant liners for ball mill diaphragm frames — cast to customer drawings in high-chrome iron alloys.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Hi-Chrome Iron</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+      <div class="p-card">
+        <div class="card-img-wrap">
+          <div class="img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span>Photo</span></div>
+        </div>
+        <div class="card-body">
+          <h4>Roller Press Tyres</h4>
+          <p>Hard-faced and solid-cast roller press grinding elements for Loesche and Pfeiffer high-pressure grinding roll (HPGR) systems.</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-mat">Hardfaced · Solid Cast</span>
+          <div class="card-arrow"><svg viewBox="0 0 12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- CAPABILITIES BAR -->
+<div class="cap-bar">
+  <div class="cap">
+    <div class="cap-n">FLS</div>
+    <div class="cap-label">Approved supplier — FLSmidth / Fuller Technologies</div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6+</div>
+    <div class="cap-label">Major OEM approvals including Loesche, KHD, IKN, Pfeiffer</div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">ISO</div>
+    <div class="cap-label">Certified foundry and machine shop operations since 1896</div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">40+</div>
+    <div class="cap-label">Countries receiving Qadri Group cement components</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Qadri<span>Group</span> <span style="font-weight:400;color:var(--basalt);font-size:13px;margin-left:8px">Est. 1896 · Lahore, Pakistan</span></div>
+  <p>9A Link Ravi Road, Badami Bagh, Lahore · enquiries@qadrigroup.com</p>
+</footer>
+
+<script>
+// Process strip interaction
+document.querySelectorAll('.ps-step').forEach((step,i)=>{
+  step.addEventListener('click',()=>{
+    document.querySelectorAll('.ps-step').forEach(s=>s.classList.remove('active'));
+    step.classList.add('active');
+    const stages=['stage1','stage2','stage3','stage4','stage4'];
+    const target=document.getElementById(stages[i]);
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
